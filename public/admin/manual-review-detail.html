@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Review</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <main class="admin-shell detail-shell">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">Loan Officer Workspace</p>
+        <h1>Manual Review</h1>
+        <p id="detailSubtitle" class="muted">Loading application...</p>
+      </div>
+      <a class="button button-secondary" href="/admin/manual-review">Back to queue</a>
+    </header>
+
+    <section id="detailPanel" class="panel" hidden>
+      <div id="message" class="message" role="status" hidden></div>
+      <div class="detail-grid" id="applicationDetails"></div>
+      <div class="reason-section">
+        <h2>Credit Repayment Assessment</h2>
+        <ul id="assessmentDetails"></ul>
+        <h2>Why manual review?</h2>
+        <ul id="reasons"></ul>
+      </div>
+      <div class="review-footer">
+        <div>
+          <span class="label">Review status</span>
+          <span id="reviewStatus" class="status pending">PENDING</span>
+        </div>
+        <div id="reviewActions" class="actions">
+          <button id="approveButton" class="button button-approve" type="button">Approve application</button>
+          <button id="rejectButton" class="button button-reject" type="button">Reject application</button>
+        </div>
+      </div>
+    </section>
+    <p id="errorState" class="error-state" hidden></p>
+  </main>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eligibility Result</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-background"></div>
+  <main class="app-container page-container">
+    <header class="app-header"><div class="header-badge">Applicant Portal</div><h1 class="header-title">Eligibility Result</h1><p class="header-subtitle">Review the latest decision and its supporting reasons.</p></header>
+    <nav class="page-nav" aria-label="Applicant pages"><a href="/apply">Application</a><a class="active" href="/result">Latest Result</a><a href="/history">History</a></nav>
+    <section id="resultPanel" class="card page-card result-page-card" hidden>
+      <div id="decisionBanner" class="decision-banner"><div class="decision-status-row"><span class="status-label">Final Decision</span><span id="decisionBadge" class="decision-badge"></span></div><p id="decisionMessage" class="decision-message"></p><a id="manualReviewButton" class="btn btn-review-link" href="#" hidden>Manual Review</a></div>
+      <div class="result-section"><h2 class="section-title">Decision Explanation</h2><div id="reasonBox" class="reason-box"></div></div>
+      <div class="result-section"><h2 class="section-title">Application Summary</h2><div id="summaryGrid" class="metrics-grid"></div></div>
+      <div class="result-section"><h2 class="section-title">Rule Evaluation</h2><div id="checks" class="pipeline-list"></div></div>
+    </section>
+    <section id="emptyResult" class="card page-card result-placeholder"><div class="placeholder-art">📊</div><h2>No result yet</h2><p>Submit an application first to see its decision here.</p><a class="btn btn-primary page-action" href="/apply">Start an application</a></section>
+  </main>
+  <script src="/js/pages.js"></script>
+</body>
+</html>

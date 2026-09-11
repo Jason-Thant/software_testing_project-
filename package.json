@@ -1,0 +1,51 @@
+{
+  "name": "loan-eligibility-decision-system",
+  "version": "1.0.0",
+  "description": "Loan Eligibility Analysis and Decision System for Software Testing",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --verbose",
+    "test:unit": "jest tests/unit --verbose",
+    "test:control-flow": "jest tests/control-flow --verbose",
+    "test:data-flow": "jest tests/data-flow --verbose",
+    "test:boundary": "jest tests/boundary --verbose",
+    "test:integration": "jest tests/integration --verbose",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "loan-eligibility",
+    "software-testing",
+    "jest",
+    "supertest",
+    "express",
+    "mysql"
+  ],
+  "author": "Software Testing Student",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src/rules/**/*.js",
+      "src/services/**/*.js",
+      "src/controllers/**/*.js",
+      "src/middleware/**/*.js",
+      "src/app.js"
+    ]
+  }
+}

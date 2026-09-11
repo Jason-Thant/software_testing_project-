@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Application</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-background"></div>
+  <main class="app-container page-container">
+    <div class="audience-switcher">
+      <a class="admin-entry" href="/admin/manual-review">Admin / Loan Officer: Manual Review</a>
+    </div>
+    <header class="app-header">
+      <div class="header-badge">Applicant Portal</div>
+      <h1 class="header-title">Loan Application</h1>
+      <p class="header-subtitle">Submit your information to check loan eligibility.</p>
+    </header>
+    <nav class="page-nav" aria-label="Applicant pages">
+      <a class="active" href="/apply">Application</a>
+      <a href="/result">Latest Result</a>
+      <a href="/history">History</a>
+    </nav>
+    <section class="card form-card page-card">
+      <div class="card-header">
+        <div class="card-icon form-icon">📝</div>
+        <div><h2 class="card-title">Applicant Information</h2><p class="card-desc">Enter your financial information and repayment history.</p></div>
+      </div>
+      <form id="applicationForm" novalidate>
+        <div class="form-group"><label for="age" class="form-label"><span>Age</span><span class="rule-hint" id="ageHint">Minimum: 20</span></label><input type="number" id="age" class="form-control" min="1" max="120" required><div class="field-error" id="ageError"></div></div>
+        <div class="form-group"><label for="monthlyIncome" class="form-label"><span>Monthly Income</span><span class="rule-hint" id="incomeHint">Minimum: $3,000</span></label><input type="number" id="monthlyIncome" class="form-control" min="0" step="any" required><div class="field-error" id="monthlyIncomeError"></div></div>
+        <div class="form-group"><label for="monthlyDebt" class="form-label"><span>Existing Monthly Debt</span><span class="rule-hint">Used for DTI</span></label><input type="number" id="monthlyDebt" class="form-control" min="0" step="any" required><div class="field-error" id="monthlyDebtError"></div></div>
+        <fieldset class="assessment-fieldset">
+          <legend>Credit Repayment Assessment</legend>
+          <p class="assessment-help">Answer these questions so we can assess repayment risk for this application.</p>
+          <div class="form-group"><label for="previousLoanDefault" class="form-label"><span>Have you ever defaulted on a loan?</span></label><select id="previousLoanDefault" class="form-control" required><option value="">Choose an answer</option><option value="NO">No</option><option value="YES">Yes</option></select><div class="field-error" id="previousLoanDefaultError"></div></div>
+          <div class="form-group"><label for="overduePayments" class="form-label"><span>How many loan payments are currently overdue?</span></label><input type="number" id="overduePayments" class="form-control" min="0" step="1" required><div class="field-error" id="overduePaymentsError"></div></div>
+          <div class="form-group"><label for="historicalLatePayments" class="form-label"><span>How many loan payments have you made late in the past?</span></label><input type="number" id="historicalLatePayments" class="form-control" min="0" step="1" required><div class="field-error" id="historicalLatePaymentsError"></div></div>
+          <div class="form-group"><label for="longestPreviousLoanRepaymentMonths" class="form-label"><span>How many months did it take to repay your longest previous loan?</span></label><select id="longestPreviousLoanRepaymentMonths" class="form-control" required><option value="">Choose an answer</option><option value="NO_PREVIOUS_LOAN">No previous loan</option><option value="12">12 months or less</option><option value="24">13-24 months</option><option value="36">25-36 months</option><option value="37">More than 36 months</option></select><div class="field-error" id="longestPreviousLoanRepaymentMonthsError"></div></div>
+        </fieldset>
+        <div class="form-group"><label for="loanAmount" class="form-label"><span>Requested Loan Amount</span><span class="rule-hint" id="loanHint">Maximum: $50,000</span></label><input type="number" id="loanAmount" class="form-control" min="1" step="any" required><div class="field-error" id="loanAmountError"></div></div>
+        <div class="alert alert-danger" id="formAlert" hidden></div>
+        <div class="form-actions"><button type="submit" id="submitButton" class="btn btn-primary">Check Eligibility</button><button type="reset" class="btn btn-secondary">Reset</button></div>
+      </form>
+    </section>
+  </main>
+  <script src="/js/pages.js"></script>
+</body>
+</html>

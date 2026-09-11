@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application History</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-background"></div>
+  <main class="app-container page-container">
+    <header class="app-header"><div class="header-badge">Applicant Portal</div><h1 class="header-title">Application History</h1><p class="header-subtitle">Review previously submitted applications.</p></header>
+    <nav class="page-nav" aria-label="Applicant pages"><a href="/apply">Application</a><a href="/result">Latest Result</a><a class="active" href="/history">History</a></nav>
+    <section class="card page-card">
+      <div class="history-header"><div class="card-header-clean"><div class="card-icon history-icon">📜</div><div><h2 class="card-title">Submitted Applications</h2><p class="card-desc">Recent applications recorded by the system.</p></div></div><button id="refreshHistory" type="button" class="btn btn-outline">Refresh</button></div>
+      <div class="table-responsive"><table class="history-table"><thead><tr><th>ID</th><th>Age</th><th>Income</th><th>Debt</th><th>DTI</th><th>Risk Category</th><th>Loan Amount</th><th>Decision</th><th>Reason</th><th>Date</th></tr></thead><tbody id="historyRows"><tr><td colspan="10" class="empty-table">Loading applications...</td></tr></tbody></table></div>
+    </section>
+  </main>
+  <script src="/js/pages.js"></script>
+</body>
+</html>

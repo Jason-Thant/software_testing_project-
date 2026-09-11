@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Manual Reviews</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">Loan Officer Workspace</p>
+        <h1>Manual Review Queue</h1>
+        <p class="muted">Applications that need an authorized human decision.</p>
+      </div>
+      <a class="button button-secondary" href="/">Applicant application</a>
+    </header>
+
+    <section class="panel settings-panel">
+      <div class="panel-heading"><div><h2>Decision boundaries</h2><p class="muted">Changes apply to new customer applications.</p></div></div>
+      <form id="settingsForm" class="settings-grid">
+        <label>Minimum age<input name="minAge" type="number" min="0" required></label>
+        <label>Minimum monthly income<input name="minMonthlyIncome" type="number" min="0" required></label>
+        <label>Income lower review range<input name="borderlineIncomeBelowMinRange" type="number" min="0" required></label>
+        <label>Income upper review range<input name="borderlineIncomeRange" type="number" min="0" required></label>
+        <label>Maximum DTI %<input name="maxDtiPercentage" type="number" min="0" step="0.01" required></label>
+        <label>Maximum loan amount<input name="maxLoanAmount" type="number" min="0" required></label>
+        <label>Loan upper review range<input name="borderlineLoanRange" type="number" min="0" required></label>
+        <label>High-risk maximum score<input name="creditRiskHighMax" type="number" min="0" max="100" required></label>
+        <label>Medium-risk maximum score<input name="creditRiskMediumMax" type="number" min="0" max="100" required></label>
+        <label>Low-risk minimum score<input name="creditRiskLowMin" type="number" min="0" max="100" required></label>
+        <button class="button button-review" type="submit">Save boundaries</button>
+      </form>
+      <div id="settingsMessage" class="message" role="status" hidden></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Pending applications</h2>
+          <p class="muted">Review every flagged reason before making a final decision.</p>
+        </div>
+        <button id="refreshButton" class="button button-secondary" type="button">Refresh</button>
+      </div>
+      <div id="message" class="message" role="status" hidden></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Age</th>
+              <th>Income</th>
+              <th>Debt</th>
+              <th>DTI</th>
+              <th>Risk category</th>
+              <th>Loan amount</th>
+              <th>Assessment / review reason</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="reviewRows">
+            <tr><td class="empty" colspan="10">Loading pending reviews...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
