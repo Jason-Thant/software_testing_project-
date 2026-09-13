@@ -12,7 +12,8 @@
     "test:data-flow": "jest tests/data-flow --verbose",
     "test:boundary": "jest tests/boundary --verbose",
     "test:integration": "jest tests/integration --verbose",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:domain": "jest tests/domain --verbose"
   },
   "keywords": [
     "loan-eligibility",
