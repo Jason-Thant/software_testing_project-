@@ -11,6 +11,23 @@
   <main class="app-container page-container">
     <header class="app-header"><div class="header-badge">Applicant Portal</div><h1 class="header-title">Application History</h1><p class="header-subtitle">Review previously submitted applications.</p></header>
     <nav class="page-nav" aria-label="Applicant pages"><a href="/apply">Application</a><a href="/result">Latest Result</a><a class="active" href="/history">History</a></nav>
+    <section class="page-hero">
+      <div class="hero-copy">
+        <div class="header-badge">Portfolio view</div>
+        <h1>Track every application.</h1>
+        <p>Review prior requests, compare outcomes, and keep a clear history of each lending decision.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>Live</strong><span>History</span></div>
+          <div class="hero-stat"><strong>Easy</strong><span>Search</span></div>
+          <div class="hero-stat"><strong>Trusted</strong><span>Records</span></div>
+        </div>
+      </div>
+      <div class="hero-image-grid" aria-hidden="true">
+        <div class="photo-card tall"></div>
+        <div class="photo-card small-top"></div>
+        <div class="photo-card small-bottom"></div>
+      </div>
+    </section>
     <section class="card page-card">
       <div class="history-header"><div class="card-header-clean"><div class="card-icon history-icon">📜</div><div><h2 class="card-title">Submitted Applications</h2><p class="card-desc">Recent applications recorded by the system.</p></div></div><button id="refreshHistory" type="button" class="btn btn-outline">Refresh</button></div>
       <div class="table-responsive"><table class="history-table"><thead><tr><th>ID</th><th>Age</th><th>Income</th><th>Debt</th><th>DTI</th><th>Risk Category</th><th>Loan Amount</th><th>Decision</th><th>Reason</th><th>Date</th></tr></thead><tbody id="historyRows"><tr><td colspan="10" class="empty-table">Loading applications...</td></tr></tbody></table></div>

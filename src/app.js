@@ -18,11 +18,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Applicant pages
+// Public entry points
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/application.html'));
+  res.sendFile(path.join(__dirname, '../public/login.html'));
 });
 
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/login.html'));
+});
+
+// Applicant pages
 app.get('/application', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/application.html'));
 });

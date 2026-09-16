@@ -11,6 +11,23 @@
   <main class="app-container page-container">
     <header class="app-header"><div class="header-badge">Applicant Portal</div><h1 class="header-title">Eligibility Result</h1><p class="header-subtitle">Review the latest decision and its supporting reasons.</p></header>
     <nav class="page-nav" aria-label="Applicant pages"><a href="/apply">Application</a><a class="active" href="/result">Latest Result</a><a href="/history">History</a></nav>
+    <section class="page-hero">
+      <div class="hero-copy">
+        <div class="header-badge">Decision summary</div>
+        <h1>Your application outcome.</h1>
+        <p>See the final decision, supporting rationale, and the exact rules that influenced the result.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>Clear</strong><span>Insights</span></div>
+          <div class="hero-stat"><strong>Fast</strong><span>Review</span></div>
+          <div class="hero-stat"><strong>Actionable</strong><span>Reasons</span></div>
+        </div>
+      </div>
+      <div class="hero-image-grid" aria-hidden="true">
+        <div class="photo-card tall"></div>
+        <div class="photo-card small-top"></div>
+        <div class="photo-card small-bottom"></div>
+      </div>
+    </section>
     <section id="resultPanel" class="card page-card result-page-card" hidden>
       <div id="decisionBanner" class="decision-banner"><div class="decision-status-row"><span class="status-label">Final Decision</span><span id="decisionBadge" class="decision-badge"></span></div><p id="decisionMessage" class="decision-message"></p><a id="manualReviewButton" class="btn btn-review-link" href="#" hidden>Manual Review</a></div>
       <div class="result-section"><h2 class="section-title">Decision Explanation</h2><div id="reasonBox" class="reason-box"></div></div>

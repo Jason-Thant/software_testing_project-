@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Loan Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-page-body">
+  <div class="login-background"></div>
+
+  <main class="login-shell">
+    <section class="login-visual">
+      <div class="login-visual-overlay"></div>
+      <div class="login-branding">
+        <span class="login-chip">Trusted lending</span>
+        <h1>Finance smarter with confidence.</h1>
+        <p>Manage applications, review decisions, and stay in control of every borrowing journey.</p>
+      </div>
+      <div class="login-metrics">
+        <div class="mini-stat">
+          <strong>24/7</strong>
+          <span>Access</span>
+        </div>
+        <div class="mini-stat">
+          <strong>2 min</strong>
+          <span>Approval checks</span>
+        </div>
+        <div class="mini-stat">
+          <strong>98.4%</strong>
+          <span>Data quality</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-panel">
+      <div class="login-head">
+        <div class="login-icon">🔐</div>
+        <div>
+          <p class="login-eyebrow">Welcome back</p>
+          <h2>Sign in</h2>
+        </div>
+      </div>
+
+      <form id="loginForm" class="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input id="email" class="form-control" type="email" placeholder="name@example.com" required>
+          <div class="field-error" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input id="password" class="form-control" type="password" placeholder="Enter your password" required>
+          <div class="field-error" id="passwordError"></div>
+        </div>
+
+        <div class="login-options">
+          <label class="remember-me"><input type="checkbox" id="rememberMe"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <div id="loginAlert" class="alert alert-danger" hidden></div>
+
+        <button type="submit" class="btn btn-primary login-btn">Login</button>
+      </form>
+
+      <div class="demo-credentials">
+        <p>Demo access</p>
+        <div class="demo-account-list">
+          <span>User: user@loan.com / user123</span>
+          <span>Admin: admin@loan.com / password123</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/login.js"></script>
+</body>
+</html>
