@@ -88,14 +88,6 @@ async function getReviewDetail(req, res) {
       });
     }
 
-    if (application.decision !== 'MANUAL REVIEW' || application.review_status !== 'PENDING') {
-      return res.status(404).json({
-        success: false,
-        error: 'Not Found',
-        message: `Application #${id} is not pending manual review.`
-      });
-    }
-
     return res.status(200).json({
       success: true,
       data: application

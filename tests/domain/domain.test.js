@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const { closeDatabase, clearMemory } = require('../../src/database/connection');
+const { closeDatabase, clearDatabase } = require('../../src/database/connection');
 
 /*
  * DOMAIN TESTING
@@ -34,7 +34,7 @@ const validApplication = (overrides = {}) => ({
 });
 
 describe('Domain Testing: Loan application input partitions', () => {
-  beforeEach(() => clearMemory());
+  beforeEach(async () => clearDatabase());
   afterAll(async () => closeDatabase());
 
   describe('Age domains', () => {

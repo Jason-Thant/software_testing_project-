@@ -5,7 +5,7 @@
  */
 
 const { evaluateLoanEligibility } = require('../rules/decisionLogic');
-const { saveApplicationRecord, fetchApplicationHistory, fetchApplicationById, updateReviewStatus } = require('../database/connection');
+const { saveApplicationRecord, fetchApplicationHistory, fetchApplicationById, fetchApplicationNotification, updateReviewStatus } = require('../database/connection');
 const RULES_CONFIG = require('../config/rules.config');
 
 /**
@@ -14,7 +14,7 @@ const RULES_CONFIG = require('../config/rules.config');
  * @param {Object} applicationData
  * @returns {Promise<Object>}
  */
-async function processLoanApplication(applicationData) {
+async function processLoanApplication(applicationData, user = null) {
   // 1. Evaluate with pure decision engine
   const evaluation = evaluateLoanEligibility(applicationData);
 
@@ -33,10 +33,11 @@ async function processLoanApplication(applicationData) {
     loanAmount: applicationData.loanAmount,
     decision: evaluation.decision,
     reason: evaluation.reason,
-    review_status: evaluation.decision === 'MANUAL REVIEW' ? 'PENDING' : null
+    review_status: evaluation.decision === 'MANUAL REVIEW' ? 'PENDING' : null,
+    userId: user?.id || null
   };
 
-  // 3. Persist to database (MySQL or memory fallback)
+  // 3. Persist to PostgreSQL
   const savedRecord = await saveApplicationRecord(recordToSave);
 
   return {
@@ -79,7 +80,7 @@ async function getApplicationHistory(limit = 50) {
  * Rebuilds the rule statuses from the stored inputs while preserving the
  * persisted final decision after an admin review.
  */
-async function getApplicationResult(id) {
+async function getApplicationResult(id, user = null) {
   const record = await fetchApplicationById(id);
   if (!record) return null;
 
@@ -104,6 +105,7 @@ async function getApplicationResult(id) {
     creditRiskScore: Number(record.credit_risk_score),
     creditRiskCategory: record.credit_risk_category,
     review_status: record.review_status,
+    notification: await fetchApplicationNotification(id, user?.id || null),
     createdAt: record.created_at,
     application: {
       age: record.age,

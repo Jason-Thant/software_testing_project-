@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const { closeDatabase, clearMemory } = require('../../src/database/connection');
+const { closeDatabase, clearDatabase } = require('../../src/database/connection');
 
 const lowRisk = {
   age: 28,
@@ -22,7 +22,7 @@ const mediumRisk = {
 };
 
 describe('System Integration Tests: customer and admin workflows', () => {
-  beforeEach(() => clearMemory());
+  beforeEach(async () => clearDatabase());
   afterAll(async () => closeDatabase());
 
   test('serves customer pages and health endpoint', async () => {

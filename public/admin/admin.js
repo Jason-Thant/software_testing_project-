@@ -29,12 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
       if (!response.ok) throw new Error(result.message || 'Unable to load reviews.');
       if (!result.data.length) {
-        rows.innerHTML = '<tr><td class="empty" colspan="10">No applications are waiting for manual review.</td></tr>';
+        rows.innerHTML = '<tr><td class="empty" colspan="11">No applications are waiting for manual review.</td></tr>';
         return;
       }
       rows.innerHTML = result.data.map(application => `
         <tr>
           <td><strong>#${escapeHtml(application.id)}</strong></td>
+          <td>${escapeHtml(application.user_full_name || 'Guest')}<br><small>${escapeHtml(application.user_email || 'No account linked')}</small></td>
           <td>${escapeHtml(application.age)}</td>
           <td>${money(application.monthly_income)}</td>
           <td>${money(application.monthly_debt)}</td>
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </tr>
       `).join('');
     } catch (error) {
-      rows.innerHTML = `<tr><td class="empty" colspan="10">${escapeHtml(error.message)}</td></tr>`;
+      rows.innerHTML = `<tr><td class="empty" colspan="11">${escapeHtml(error.message)}</td></tr>`;
     }
   }
 
@@ -80,14 +81,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
       if (!response.ok) throw new Error(result.message || 'Unable to load this application.');
       const application = result.data;
-      document.getElementById('detailSubtitle').textContent = `Application #${application.id}`;
+      document.getElementById('detailSubtitle').textContent = `${application.user_full_name || 'Guest applicant'}${application.user_email ? ` (${application.user_email})` : ''} - Application #${application.id}`;
       document.getElementById('applicationDetails').innerHTML = [
+        ['Applicant name', application.user_full_name || 'Guest applicant'],
+        ['Applicant email', application.user_email || 'No account linked'],
         ['Age', application.age],
         ['Monthly income', money(application.monthly_income)],
         ['Existing monthly debt', money(application.monthly_debt)],
         ['DTI', dti(application.dti)],
         ['Risk category', application.credit_risk_category],
-        ['Requested loan', money(application.loan_amount)]
+        ['Requested loan', money(application.loan_amount)],
+        ['Decision', application.decision],
+        ['Review status', application.review_status || 'Not reviewed']
       ].map(([label, value]) => `<div class="detail-item"><span class="label">${label}</span><span class="value">${escapeHtml(value)}</span></div>`).join('');
       const reasons = application.reason.split(/(?<=\.)\s+/).filter(Boolean);
       document.getElementById('assessmentDetails').innerHTML = [

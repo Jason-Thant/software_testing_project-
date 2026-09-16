@@ -12,7 +12,7 @@ const loanService = require('../services/loanService');
 async function checkEligibility(req, res) {
   try {
     const applicationData = req.sanitizedApplication || req.body;
-    const result = await loanService.processLoanApplication(applicationData);
+    const result = await loanService.processLoanApplication(applicationData, req.user);
 
     return res.status(200).json({
       success: true,
@@ -67,7 +67,7 @@ async function getApplications(req, res) {
  */
 async function getApplicationResult(req, res) {
   try {
-    const result = await loanService.getApplicationResult(req.params.id);
+    const result = await loanService.getApplicationResult(req.params.id, req.user);
     if (!result) {
       return res.status(404).json({
         success: false,

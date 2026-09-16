@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | Loan Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-page-body">
+  <div class="login-background"></div>
+  <main class="login-shell">
+    <section class="login-visual">
+      <div class="login-visual-overlay"></div>
+      <div class="login-branding">
+        <span class="login-chip">Your borrowing journey</span>
+        <h1>Start with a clearer financial picture.</h1>
+        <p>Create an account to save applications and track every decision in one place.</p>
+      </div>
+      <div class="login-metrics">
+        <div class="mini-stat"><strong>Secure</strong><span>Account access</span></div>
+        <div class="mini-stat"><strong>Saved</strong><span>Application history</span></div>
+        <div class="mini-stat"><strong>Simple</strong><span>Loan checks</span></div>
+      </div>
+    </section>
+    <section class="login-panel">
+      <div class="login-head"><div class="login-icon">✦</div><div><p class="login-eyebrow">New here?</p><h2>Create account</h2></div></div>
+      <form id="signupForm" class="login-form" novalidate>
+        <div class="form-group"><label class="form-label" for="fullName">Full name</label><input id="fullName" class="form-control" type="text" required><div class="field-error" id="fullNameError"></div></div>
+        <div class="form-group"><label class="form-label" for="email">Email</label><input id="email" class="form-control" type="email" required><div class="field-error" id="emailError"></div></div>
+        <div class="form-group"><label class="form-label" for="password">Password</label><input id="password" class="form-control" type="password" minlength="6" required><div class="field-error" id="passwordError"></div></div>
+        <div id="signupAlert" class="alert alert-danger" hidden></div>
+        <button type="submit" class="btn btn-primary login-btn">Create account</button>
+      </form>
+      <p class="login-switch">Already have an account? <a href="/login">Sign in</a></p>
+    </section>
+  </main>
+  <script src="/js/signup.js"></script>
+</body>
+</html>

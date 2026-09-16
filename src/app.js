@@ -10,6 +10,7 @@ const cors = require('cors');
 const path = require('path');
 const loanRoutes = require('./routes/loanRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -25,6 +26,10 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/login.html'));
+});
+
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/signup.html'));
 });
 
 // Applicant pages
@@ -54,6 +59,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 // API Routes
 app.use('/api/loan', loanRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/auth', authRoutes);
 
 // Admin pages
 app.get('/admin/manual-review', (req, res) => {

@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const button = document.getElementById('submitButton');
       button.disabled = true;
       try {
-        const response = await fetch('/api/loan/check', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) });
+        const response = await fetch('/api/loan/check', { method: 'POST', headers: { 'Content-Type': 'application/json', ...(localStorage.getItem('loanPortalToken') ? { Authorization: `Bearer ${localStorage.getItem('loanPortalToken')}` } : {}) }, body: JSON.stringify(values) });
         const result = await response.json();
         if (!response.ok) throw new Error(result.message || 'Unable to process application.');
         sessionStorage.setItem('latestLoanResult', JSON.stringify(result));
@@ -63,12 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (resultPanel) {
     const applicationId = window.location.pathname.match(/^\/result\/(\d+)$/)?.[1];
     const loadStoredResult = async () => {
-      if (applicationId) {
-        const response = await fetch(`/api/loan/applications/${applicationId}`);
+      const stored = sessionStorage.getItem('latestLoanResult');
+      const storedId = stored ? JSON.parse(stored).id : null;
+      const resultId = applicationId || storedId;
+      if (resultId) {
+        const response = await fetch(`/api/loan/applications/${resultId}`, { headers: localStorage.getItem('loanPortalToken') ? { Authorization: `Bearer ${localStorage.getItem('loanPortalToken')}` } : {} });
         if (!response.ok) throw new Error('Unable to load this application result.');
         return (await response.json());
       }
-      const stored = sessionStorage.getItem('latestLoanResult');
       return stored ? JSON.parse(stored) : null;
     };
 
@@ -80,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const banner = document.getElementById('decisionBanner');
       banner.className = `decision-banner status-${decision === 'MANUAL REVIEW' ? 'review' : decision.toLowerCase()}`;
       document.getElementById('decisionBadge').textContent = decision;
-      document.getElementById('decisionMessage').textContent = decision === 'APPROVED' ? 'The applicant meets the automatic loan eligibility criteria.' : decision === 'REJECTED' ? 'The applicant does not meet the loan eligibility criteria.' : 'The application requires review by an authorized loan officer.';
+      document.getElementById('decisionMessage').textContent = result.notification?.message || (decision === 'APPROVED' ? 'Congratulations! Your loan has been approved.' : decision === 'REJECTED' ? 'The applicant does not meet the loan eligibility criteria.' : 'The application requires review by an authorized loan officer.');
+      if (result.notification) document.getElementById('decisionBanner').classList.add('has-notification');
       document.getElementById('reasonBox').textContent = result.reason;
       if (decision === 'MANUAL REVIEW') {
         const reviewButton = document.getElementById('manualReviewButton');
@@ -101,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (historyRows) {
     const loadHistory = async () => {
       try {
-        const response = await fetch('/api/loan/applications?limit=50');
+        const response = await fetch('/api/loan/applications?limit=50', { headers: localStorage.getItem('loanPortalToken') ? { Authorization: `Bearer ${localStorage.getItem('loanPortalToken')}` } : {} });
         const result = await response.json();
         if (!response.ok || !result.data.length) { historyRows.innerHTML = '<tr><td colspan="10" class="empty-table">No applications submitted yet.</td></tr>'; return; }
         historyRows.innerHTML = result.data.map(item => `<tr><td><strong>#${escapeHtml(item.id)}</strong></td><td>${escapeHtml(item.age)}</td><td>${money(item.monthly_income)}</td><td>${money(item.monthly_debt)}</td><td>${formatDti(item.dti)}</td><td>${escapeHtml(item.credit_risk_category)}</td><td>${money(item.loan_amount)}</td><td><span class="table-badge" data-status="${escapeHtml(item.decision)}">${escapeHtml(item.decision)}</span></td><td><small>${escapeHtml(item.reason)}</small></td><td><small>${new Date(item.created_at).toLocaleString()}</small></td></tr>`).join('');

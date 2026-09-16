@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (error) error.textContent = message || '';
   };
 
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
 
     setError('email', '');
@@ -41,21 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!valid) return;
 
-    const accounts = {
-      'user@loan.com': { password: 'user123', redirect: '/apply' },
-      'admin@loan.com': { password: 'password123', redirect: '/admin/manual-review' }
-    };
-
-    const account = accounts[email];
-
-    if (!account || password !== account.password) {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Invalid email or password.');
+      localStorage.setItem('loanPortalToken', result.token);
+      localStorage.setItem('loanPortalLoggedIn', 'true');
+      localStorage.setItem('loanPortalRole', result.user.role);
+      localStorage.setItem('loanPortalUser', JSON.stringify(result.user));
+      window.location.href = result.user.role === 'admin' ? '/admin/manual-review' : '/apply';
+    } catch (error) {
       alertBox.hidden = false;
-      alertBox.textContent = 'Invalid email or password. Use one of the demo credentials shown below.';
-      return;
+      alertBox.textContent = error.message;
     }
-
-    localStorage.setItem('loanPortalLoggedIn', 'true');
-    localStorage.setItem('loanPortalRole', email === 'admin@loan.com' ? 'admin' : 'user');
-    window.location.href = account.redirect;
   });
 });

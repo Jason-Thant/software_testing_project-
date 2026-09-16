@@ -9,7 +9,7 @@ const { initializeDatabase } = require('./database/connection');
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
-  // Initialize MySQL Connection (with auto-fallback to in-memory)
+  // Fail startup when PostgreSQL is unavailable so data is never silently lost.
   await initializeDatabase();
 
   app.listen(PORT, () => {
@@ -22,4 +22,7 @@ async function startServer() {
   });
 }
 
-startServer();
+startServer().catch(error => {
+  console.error(`[Startup Error] ${error.message}`);
+  process.exitCode = 1;
+});

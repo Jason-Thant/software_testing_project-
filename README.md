@@ -11,16 +11,16 @@ This project is designed for software-testing practice. The business rules are i
 - Project-specific credit repayment risk score with an itemized breakdown.
 - Boundary-aware checks for age, income, DTI, credit risk, and loan amount.
 - Applicant pages for submitting an application, viewing a result, and browsing history.
+- PostgreSQL-backed signup/login with each signed-in loan linked to its user.
 - Admin dashboard for statistics, pending manual reviews, final review decisions, and rule settings.
-- MySQL persistence with automatic table creation and migrations.
-- In-memory fallback when MySQL is unavailable, which is useful for local demonstrations and tests.
+- PostgreSQL persistence with automatic table creation and migrations.
 - JSON REST API and Jest test suites.
 
 ## Technology Stack
 
 - Node.js
 - Express 4
-- MySQL with `mysql2`
+- PostgreSQL with `pg`
 - Jest and Supertest
 - HTML, CSS, and browser JavaScript frontend
 - `dotenv` for environment configuration
@@ -30,7 +30,7 @@ This project is designed for software-testing practice. The business rules are i
 
 ```text
 .
-├── database/schema.sql              MySQL database and table definition
+├── database/schema.sql              PostgreSQL database and table definition
 ├── public/                          Applicant and admin frontend pages
 │   ├── application.html             Loan application form
 │   ├── result.html                  Decision result page
@@ -41,7 +41,7 @@ This project is designed for software-testing practice. The business rules are i
 │   ├── server.js                    Server and database startup
 │   ├── config/rules.config.js       Default and configurable rule thresholds
 │   ├── controllers/                 HTTP request handlers
-│   ├── database/connection.js       MySQL and in-memory persistence
+│   ├── database/connection.js       PostgreSQL persistence
 │   ├── middleware/validator.js      Request validation and number conversion
 │   ├── routes/                      Applicant and admin API routes
 │   ├── rules/decisionLogic.js       Pure eligibility and scoring logic
@@ -59,7 +59,7 @@ This project is designed for software-testing practice. The business rules are i
 ### Requirements
 
 - Node.js 18 or newer is recommended.
-- MySQL 8 is optional. The application starts without it by using in-memory storage.
+- PostgreSQL 18 or newer running locally is required.
 
 ### Install dependencies
 
@@ -75,16 +75,16 @@ Create a `.env` file in the project root. You can start from `.env.example`:
 PORT=3000
 
 DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
+DB_PORT=5432
+DB_USER=paingminthant
 DB_PASSWORD=
-DB_NAME=loan_eligibility
+DB_NAME=software_testing
 
 MIN_MONTHLY_INCOME=3000
 MAX_LOAN_AMOUNT=50000
 ```
 
-The server attempts to connect to MySQL on startup. If the connection fails, it logs a warning and stores applications in memory. In-memory records are lost when the process stops.
+The server connects to PostgreSQL on startup and creates the required tables and default rule settings if needed. If PostgreSQL is unavailable, startup fails clearly rather than storing application data temporarily.
 
 ### Start the application
 
@@ -389,7 +389,9 @@ The main table is `loan_applications`. It stores the submitted inputs, calculate
 
 The active decision engine uses `credit_risk_score` and `credit_risk_category`; it does not calculate or use the separate `credit_score` column.
 
-The `loan_rule_settings` table stores rule settings when MySQL is available. The application also performs safe startup migrations for older versions of the table.
+The `loan_rule_settings` table stores rule settings in PostgreSQL. The application also performs safe startup migrations for older versions of the table.
+
+The `users` table stores account details and password hashes, `user_sessions` stores expiring login sessions, and `loan_applications.user_id` identifies the account that submitted each signed-in application. Visit `/signup` to create an account. The demo accounts remain `user@loan.com` / `user123` and `admin@loan.com` / `password123`.
 
 ## Testing
 
@@ -415,13 +417,17 @@ Generate coverage:
 npm run test:coverage
 ```
 
-The tests cover calculation examples, exact boundary values, decision priority, input/data flow, HTTP behavior, and MySQL-independent in-memory operation.
+The tests cover calculation examples, exact boundary values, decision priority, input/data flow, HTTP behavior, and PostgreSQL-backed persistence.
 
 ## Design Notes
 
 - `src/rules/decisionLogic.js` contains deterministic functions and is independent of Express and the database.
 - `src/middleware/validator.js` validates and normalizes incoming request values before they reach the controller.
 - `src/services/loanService.js` coordinates evaluation and persistence.
-- `src/database/connection.js` chooses MySQL when connected and falls back to in-memory storage when it is not.
+- `src/database/connection.js` manages the PostgreSQL pool and fails startup when the database is unavailable.
 - Manual review is a workflow state. The initial decision remains `MANUAL REVIEW` until an administrator submits a final `APPROVED` or `REJECTED` decision.
 - This is an educational/demo decision system, not financial advice or a production underwriting model.
+
+For Database
+psql -d software_testing
+\dt (for showing the tables )

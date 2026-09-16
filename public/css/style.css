@@ -447,6 +447,7 @@ body {
 .status-label { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); }
 .decision-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; padding: 0.3rem 0.9rem; border-radius: 9999px; }
 .decision-message { font-size: 0.94rem; line-height: 1.5; }
+.has-notification .decision-message { font-weight: 700; color: #176b45; }
 .btn-review-link { margin-top: 0.8rem; background: #986b00; color: #fff; text-decoration: none; }
 .btn-review-link:hover { background: #795400; }
 .btn-review-link[hidden] { display: none; }
