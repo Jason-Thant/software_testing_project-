@@ -44,7 +44,7 @@
         <div class="card-icon form-icon">📝</div>
         <div><h2 class="card-title">Applicant Information</h2><p class="card-desc">Enter your financial information and repayment history.</p></div>
       </div>
-      <form id="applicationForm" novalidate>
+      <form id="applicationForm">
         <div class="form-group"><label for="age" class="form-label"><span>Age</span><span class="rule-hint" id="ageHint">Minimum: 20</span></label><input type="number" id="age" class="form-control" min="1" max="120" required><div class="field-error" id="ageError"></div></div>
         <div class="form-group"><label for="monthlyIncome" class="form-label"><span>Monthly Income</span><span class="rule-hint" id="incomeHint">Minimum: $3,000</span></label><input type="number" id="monthlyIncome" class="form-control" min="0" step="any" required><div class="field-error" id="monthlyIncomeError"></div></div>
         <div class="form-group"><label for="monthlyDebt" class="form-label"><span>Existing Monthly Debt</span><span class="rule-hint">Used for DTI</span></label><input type="number" id="monthlyDebt" class="form-control" min="0" step="any" required><div class="field-error" id="monthlyDebtError"></div></div>
